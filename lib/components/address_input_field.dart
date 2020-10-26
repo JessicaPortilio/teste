@@ -11,11 +11,9 @@ import 'package:top_components/widgets/buttons/primary_button.dart';
 
 class AddressInputField extends StatefulWidget {
 
-  final Address address;
   AdressBloc _adressBloc;
-  final TextEditingController _controller = TextEditingController();
 
-  AddressInputField(this.address, this._adressBloc);
+  AddressInputField( this._adressBloc);
 
   @override
   _AddressInputFieldState createState() => _AddressInputFieldState();
@@ -23,13 +21,16 @@ class AddressInputField extends StatefulWidget {
 
 class _AddressInputFieldState extends State<AddressInputField> {
 
-  final TextEditingController _controllerStreet = TextEditingController();
+  final TextEditingController _controllerEstado = TextEditingController();
+  final TextEditingController _controllerCity = TextEditingController();
+
+  String emptyValidator(String text) => text.isEmpty ? 'Campo obrigatório' : null;
+
 
   @override
   Widget build(BuildContext context) {
     //final cartManager = context.watch<CartManager>();
 
-    String emptyValidator(String text) => text.isEmpty ? 'Campo obrigatório' : null;
     /* if (address.zipCode != null) */
 
 
@@ -37,124 +38,129 @@ class _AddressInputFieldState extends State<AddressInputField> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
 
-    StreamBuilder<String>(
-    stream: widget._adressBloc.estado,
-        builder: (context, snapshot) {
-          widget._controller.text = snapshot.hasData ? snapshot.data : '';
+            StreamBuilder<String>(
+            stream: widget._adressBloc.estado,
+                builder: (context, snapshot) {
+                  _controllerEstado.text = snapshot.hasData ? snapshot.data : '';
+                  return TextFormField(
+                    enabled: false,
+                    controller: _controllerEstado,
+                    decoration: const InputDecoration(
+                      isDense: true,
+                      labelText: 'Estado',
+                      labelStyle: TextStyle(color: Colors.black),
+                      border: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.orange),
+                      ),
+                      //hintText: 'Campinas',
+                    ),
+                   // validator: emptyValidator,
+                   // onSaved: (t) => widget.address.state = t,
+                  );
+                }
+            ),
+            StreamBuilder<String>(
+               stream: widget._adressBloc.cidade,
+                builder: (context, snapshot) {
+                  _controllerCity.text = snapshot.hasData ? snapshot.data : '';
+                return TextFormField(
+                  enabled: false,
+                  controller: _controllerCity,
+                  onChanged: (value){
+                    setState(() {
+                      _controllerCity.text = value;
 
-          return TextFormField(
-            enabled: false,
-            controller: widget._controller,
-            decoration: const InputDecoration(
-              isDense: true,
-              labelText: 'Estado',
-              labelStyle: TextStyle(color: Colors.black),
-              border: UnderlineInputBorder(
-                borderSide: BorderSide(color: Colors.orange),
-              ),
-              //hintText: 'Campinas',
-            ),
-            validator: emptyValidator,
-            onSaved: (t) => widget.address.state = t,
-          );
-        }
-    ),
-    StreamBuilder<String>(
-       stream: widget._adressBloc.cidade,
-        builder: (context, snapshot) {
-          widget._controller.text = snapshot.hasData ? snapshot.data : '';
-          
-        return TextFormField(
-          enabled: false,
-          controller: widget._controller,
-          //initialValue: widget.address.city,
-          decoration: const InputDecoration(
-            isDense: true,
-            labelText: 'Cidade',
-            labelStyle: TextStyle(color: Colors.black),
-            border: UnderlineInputBorder(
-              borderSide: BorderSide(color: Colors.orange),
-            ),
-            //hintText: 'Campinas',
-          ),
-          validator: emptyValidator,
-          onSaved: (t) => widget.address.city = t,
-        );
-      }
-        
-    )
-    ,
-    TextFormField(
-    initialValue: widget.address.district,
-    decoration: const InputDecoration(
-    isDense: true,
-    labelText: 'Bairro',
-    labelStyle: TextStyle(color: Colors.black),
-    border: UnderlineInputBorder(
-    borderSide: BorderSide(color: Colors.orange),
-    ),
-    // hintText: 'Guanabara',
-    ),
-    validator: emptyValidator,
-    onSaved: (t) => widget.address.district = t,
-    ),
-    TextFormField(
-    controller: _controllerStreet,
-    initialValue: widget.address.street,
-    decoration: const InputDecoration(
-    isDense: true,
-    labelText: 'Endereço',
-    labelStyle: TextStyle(color: Colors.black),
-    border: UnderlineInputBorder(
-    borderSide: BorderSide(color: Colors.orange),
-    ),
-    //hintText: 'Av. Brasil',
-    ),
-    validator: emptyValidator,
-    onSaved: (t) => widget.address.street = t,
-    ),
-    TextFormField(
-    initialValue: widget.address.number,
-    decoration: const InputDecoration(
-    isDense: true,
-    labelText: 'Número',
-    hintText: 'Digite o número da sua residência',
-    labelStyle: TextStyle(color: Colors.black),
-    border: UnderlineInputBorder(
-    borderSide: BorderSide(color: Colors.orange),
-    ),
-    ),
-    inputFormatters: [
-    WhitelistingTextInputFormatter.digitsOnly,
-    ],
-    keyboardType: TextInputType.number,
-    validator: emptyValidator,
-    onSaved: (t) => widget.address.number = t,
-    ),
-    TextFormField(
-    initialValue: widget.address.complement,
-    decoration: const InputDecoration(
-    isDense: true,
-    labelText: 'Complemento (opcional)',
-    hintText: 'Ex: Bloco e Apartamento',
-    labelStyle: TextStyle(color: Colors.black),
-    border: UnderlineInputBorder(
-    borderSide: BorderSide(color: Colors.orange),
-    ),
-    ),
-    onSaved: (t) => widget.address.complement = t,
-    ),
-    SizedBox(
-    height: 24,
-    ),
-    PrimaryButton(
-    background: Colors.orange,
-    text: 'Salvar',
-    action: () {
-    if (Form.of(context).validate()) {
-    Form.of(context).save();
-    }
-    })
+                    });
+                  },
+                  //initialValue: widget.address.city,
+                  decoration: const InputDecoration(
+                    isDense: true,
+                    labelText: 'Cidade',
+                    labelStyle: TextStyle(color: Colors.black),
+                    border: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.orange),
+                    ),
+                    //hintText: 'Campinas',
+                  ),
+                  //validator: emptyValidator,
+                  //onSaved: (t) => widget.address.city = t,
+                );
+              }
+            )
+    //,
+         //  TextFormField(
+         //  initialValue: widget.address.district,
+         //  decoration: const InputDecoration(
+         //  isDense: true,
+         //  labelText: 'Bairro',
+         //  labelStyle: TextStyle(color: Colors.black),
+         //  border: UnderlineInputBorder(
+         //  borderSide: BorderSide(color: Colors.orange),
+         //  ),
+         //  // hintText: 'Guanabara',
+         //  ),
+         // // validator: emptyValidator,
+         //  onSaved: (t) => widget.address.district = t,
+         //  ),
+         //  TextFormField(
+         //  controller: _controllerStreet,
+         //  initialValue: widget.address.street,
+         //
+         //  decoration: const InputDecoration(
+         //  isDense: true,
+         //  labelText: 'Endereço',
+         //
+         //  labelStyle: TextStyle(color: Colors.black),
+         //  border: UnderlineInputBorder(
+         //  borderSide: BorderSide(color: Colors.orange),
+         //  ),
+         //  //hintText: 'Av. Brasil',
+         //  ),
+         //  //validator: emptyValidator,
+         // // onSaved: (t) => widget.address.street = t,
+         //  ),
+         //  TextFormField(
+         //  initialValue: widget.address.number,
+         //  decoration: const InputDecoration(
+         //  isDense: true,
+         //  labelText: 'Número',
+         //  hintText: 'Digite o número da sua residência',
+         //  labelStyle: TextStyle(color: Colors.black),
+         //  border: UnderlineInputBorder(
+         //  borderSide: BorderSide(color: Colors.orange),
+         //  ),
+         //  ),
+         //  inputFormatters: [
+         //  WhitelistingTextInputFormatter.digitsOnly,
+         //  ],
+         //  keyboardType: TextInputType.number,
+         //  //validator: emptyValidator,
+         //  onSaved: (t) => widget.address.number = t,
+         //  ),
+         //  TextFormField(
+         //  initialValue: widget.address.complement,
+         //  decoration: const InputDecoration(
+         //  isDense: true,
+         //  labelText: 'Complemento (opcional)',
+         //  hintText: 'Ex: Bloco e Apartamento',
+         //  labelStyle: TextStyle(color: Colors.black),
+         //  border: UnderlineInputBorder(
+         //  borderSide: BorderSide(color: Colors.orange),
+         //  ),
+         //  ),
+         //  onSaved: (t) => widget.address.complement = t,
+         //  ),
+         //  SizedBox(
+         //  height: 24,
+         //  ),
+         //  PrimaryButton(
+         //  background: Colors.orange,
+         //  text: 'Salvar',
+         //  action: () {
+         //  if (Form.of(context).validate()) {
+         //  Form.of(context).save();
+         //  }
+         //  })
     ,
     ]
     ,

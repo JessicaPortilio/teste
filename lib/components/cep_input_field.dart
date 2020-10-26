@@ -8,22 +8,21 @@ import 'package:teste/models/address.dart';
 
 class CepInputField extends StatelessWidget {
   AdressBloc _adressBloc;
-  TextEditingController controllerCity;
-
-  CepInputField(this.address, this._adressBloc, this.controllerCity);
-
-  final Address address;
   final TextEditingController cepController = TextEditingController();
+  final primaryColor = Colors.orange;
+
+  CepInputField(this._adressBloc);
+
   @override
   Widget build(BuildContext context) {
-    final primaryColor = Colors.orange;
-    if (address.zipCode == null)
+    if (true)
       return Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           TextFormField(
             controller: cepController,
             cursorColor: primaryColor,
+
             decoration: const InputDecoration(
               isDense: true,
               labelText: 'CEP',
@@ -41,8 +40,14 @@ class CepInputField extends StatelessWidget {
               else if (cep.length != 10) return 'CEP Inválido';
               return null;
             },
-            onFieldSubmitted: (cepController) {
-              _adressBloc.getAddress(cepController);
+            onFieldSubmitted: (cepController) async {
+
+              WidgetsBinding.instance.addPostFrameCallback((_){
+
+                 _adressBloc.getAddress(cepController);
+
+
+              });
 
               //context.read<CartManager>().getAddress(cepController);
               //Navigator.of(context).pop();
@@ -50,23 +55,23 @@ class CepInputField extends StatelessWidget {
           ),
         ],
       );
-    else
-      return GestureDetector(
-        onTap: () {
-          context.read<CartManager>().removeAddress();
-        },
-        child: TextFormField(
-          enabled: false,
-          initialValue: address.zipCode,
-          decoration: const InputDecoration(
-            isDense: true,
-            labelText: 'CEP',
-            labelStyle: TextStyle(color: Colors.black),
-            border: UnderlineInputBorder(
-              borderSide: BorderSide(color: Colors.orange),
-            ),
-          ),
-        ),
-      );
+    // else
+    //   return GestureDetector(
+    //     onTap: () {
+    //       context.read<CartManager>().removeAddress();
+    //     },
+    //     child: TextFormField(
+    //       enabled: false,
+    //       initialValue: address.zipCode,
+    //       decoration: const InputDecoration(
+    //         isDense: true,
+    //         labelText: 'CEP',
+    //         labelStyle: TextStyle(color: Colors.black),
+    //         border: UnderlineInputBorder(
+    //           borderSide: BorderSide(color: Colors.orange),
+    //         ),
+    //       ),
+    //     ),
+    //   );
   }
 }

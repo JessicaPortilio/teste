@@ -10,16 +10,38 @@ class AdressBloc {
   
   final _cidade = BehaviorSubject<String>();
   get cidade => _cidade.stream;
+
+  final _address = BehaviorSubject<Address>();
+  get address => _address.stream;
+
+
+
+
+
+ // String  endereco(){
+ //    address.add(
+ //        Address(
+ //            street: cepAbertoAddress.logradouro,
+ //            district: cepAbertoAddress.bairro,
+ //            zipCode: cepAbertoAddress.cep,
+ //            city: _cidade.value,
+ //            state: _estado.value,
+ //            lat: cepAbertoAddress.latitude,
+ //            long: cepAbertoAddress.longitude)
+ //    );
+ //
+ //    return _cidade.value + " " + _estado.value.toUpperCase();
+ //  }
   
   Future<void> getAddress(String cep) async {
     //Isso vai sair daqui
-    final cepAbertoService = CepAbertoService();
+    var cepAbertoService = CepAbertoService();
    // print(cep);
     try {
       //colocar isso aqui
       //cep = cep.trim().replaceAll('.', '').replaceAll('-', '');
       //isso vai ser trocado para
-      final cepAbertoAddress = await cepAbertoService.getAddressFromCep(cep);
+      var cepAbertoAddress = await cepAbertoService.getAddressFromCep(cep);
       //address = await Utils.getAddressByCep(cep);
 
       //no lugar do cepAbertoAddress vai ser address
@@ -39,12 +61,14 @@ class AdressBloc {
        // notifyListeners();
       }
     } catch (e) {
+      print('erro aqui @!!!!!!');
      // debugPrint(e.toString());
     }
   }
 
   dispose(){
     _estado.close();
+    _cidade.close();
   }
 
 }

@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
         ), */
         routes: {
           AppRoutes.HOME: (ctx) => PerfilPage(),
-          AppRoutes.ADDRESS_PAGE: (ctx) => AddressPage()
+          AppRoutes.ADDRESS_PAGE: (ctx) => AddressPage('')
         },
       ),
     );
