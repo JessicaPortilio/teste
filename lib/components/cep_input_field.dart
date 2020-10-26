@@ -39,7 +39,7 @@ class CepInputField extends StatelessWidget {
             },
             onFieldSubmitted: (cepController) {
               context.read<CartManager>().getAddress(cepController);
-              //Navigator.of(context).pop();
+              Navigator.of(context).pop();
             },
           ),
         ],
