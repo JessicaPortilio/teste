@@ -44,8 +44,8 @@ class CepInputField extends StatelessWidget {
             onFieldSubmitted: (cepController) {
               _adressBloc.getAddress(cepController);
 
-              context.read<CartManager>().getAddress(cepController);
-              Navigator.of(context).pop();
+              //context.read<CartManager>().getAddress(cepController);
+              //Navigator.of(context).pop();
             },
           ),
         ],

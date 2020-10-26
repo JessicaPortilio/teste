@@ -8,6 +8,9 @@ class AdressBloc {
   final _estado = BehaviorSubject<String>();
   get estado => _estado.stream;
   
+  final _cidade = BehaviorSubject<String>();
+  get cidade => _cidade.stream;
+  
   Future<void> getAddress(String cep) async {
     //Isso vai sair daqui
     final cepAbertoService = CepAbertoService();

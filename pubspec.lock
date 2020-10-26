@@ -232,20 +232,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.0"
-  device_info:
-    dependency: transitive
-    description:
-      name: device_info
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.4.2+9"
-  device_info_platform_interface:
-    dependency: transitive
-    description:
-      name: device_info_platform_interface
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.1"
   dio:
     dependency: "direct main"
     description:
@@ -440,13 +426,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.4.2"
-  flutter_dotenv:
-    dependency: transitive
-    description:
-      name: flutter_dotenv
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.1.0"
   flutter_ffmpeg:
     dependency: transitive
     description:
@@ -520,27 +499,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.6.3+3"
-  location:
-    dependency: transitive
-    description:
-      name: location
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "3.0.2"
-  location_platform_interface:
-    dependency: transitive
-    description:
-      name: location_platform_interface
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.0"
-  location_web:
-    dependency: transitive
-    description:
-      name: location_web
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.0"
   matcher:
     dependency: transitive
     description:
@@ -770,13 +728,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.99"
-  sms_user_consent:
-    dependency: transitive
-    description:
-      name: sms_user_consent
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.0.6"
   source_span:
     dependency: transitive
     description:

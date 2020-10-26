@@ -59,12 +59,15 @@ class _AddressInputFieldState extends State<AddressInputField> {
           );
         }
     ),
-    StreamBuilder<Object>(
-      stream: null,
-      builder: (context, snapshot) {
+    StreamBuilder<String>(
+       stream: widget._adressBloc.cidade,
+        builder: (context, snapshot) {
+          widget._controller.text = snapshot.hasData ? snapshot.data : '';
+          
         return TextFormField(
           enabled: false,
-          initialValue: widget.address.city,
+          controller: widget._controller,
+          //initialValue: widget.address.city,
           decoration: const InputDecoration(
             isDense: true,
             labelText: 'Cidade',
@@ -78,6 +81,7 @@ class _AddressInputFieldState extends State<AddressInputField> {
           onSaved: (t) => widget.address.city = t,
         );
       }
+        
     )
     ,
     TextFormField(
