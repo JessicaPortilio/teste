@@ -32,6 +32,8 @@ dependencies:
   dio: ^3.0.9
   brasil_fields: ^0.1.0
   provider: ^4.1.2
+  bloc_pattern: ^2.2.0+3
+  rxdart: ^0.23.1
   top_components:
     path:  ..\top-flutter-components
 

@@ -2,11 +2,15 @@ import 'package:brasil_fields/formatter/cep_input_formatter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:teste/bloc/adress_bloc.dart';
 import 'package:teste/models/cart_manager.dart';
 import 'package:teste/models/address.dart';
 
 class CepInputField extends StatelessWidget {
-  CepInputField(this.address);
+  AdressBloc _adressBloc;
+  TextEditingController controllerCity;
+
+  CepInputField(this.address, this._adressBloc, this.controllerCity);
 
   final Address address;
   final TextEditingController cepController = TextEditingController();
@@ -38,6 +42,8 @@ class CepInputField extends StatelessWidget {
               return null;
             },
             onFieldSubmitted: (cepController) {
+              _adressBloc.getAddress(cepController);
+
               context.read<CartManager>().getAddress(cepController);
               //Navigator.of(context).pop();
             },

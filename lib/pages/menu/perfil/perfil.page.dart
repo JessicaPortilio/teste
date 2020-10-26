@@ -153,7 +153,7 @@ class _PerfilPageState extends State<PerfilPage> {
             ),
             AddButton(
               action: () {
-                Navigator.of(context).pushNamed('/AddressPage');
+                Navigator.of(context).pushNamed('/AddressPage',);
               },
               text: 'CADASTAR NOVO ENDEREÇO',
               icon: TopIcons.plus_circle,
