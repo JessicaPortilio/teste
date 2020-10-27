@@ -8,56 +8,58 @@ import 'package:teste/models/address.dart';
 
 class CepInputField extends StatelessWidget {
   AdressBloc _adressBloc;
-  TextEditingController controllerCity;
+  final TextEditingController _cepController = TextEditingController();
+  final primaryColor = Colors.orange;
 
-  CepInputField(this.address, this._adressBloc, this.controllerCity);
+  CepInputField(this._adressBloc);
 
-  final Address address;
-  final TextEditingController cepController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     final primaryColor = Colors.orange;
-    if (address.zipCode == null)
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: <Widget>[
-          TextFormField(
-            controller: cepController,
-            cursorColor: primaryColor,
-            decoration: const InputDecoration(
-              isDense: true,
-              labelText: 'CEP',
-              hintText: '12.345-678',
-            ),
-            //impede de ser colocado qualquer caracter que não seja número
-            inputFormatters: [
-              WhitelistingTextInputFormatter.digitsOnly,
-              CepInputFormatter(),
-            ],
-            keyboardType: TextInputType.number,
-            validator: (cep) {
-              if (cep.isEmpty)
-                return 'Campo obrigatório';
-              else if (cep.length != 10) return 'CEP Inválido';
-              return null;
-            },
-            onFieldSubmitted: (cepController) {
-              _adressBloc.getAddress(cepController);
-
-              //context.read<CartManager>().getAddress(cepController);
-              //Navigator.of(context).pop();
-            },
+    // if (true)
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: <Widget>[
+        TextFormField(
+          controller: _cepController,
+          /*  onChanged: (value) {
+            _cepController.text = value;
+          }, */
+          cursorColor: primaryColor,
+          decoration: const InputDecoration(
+            isDense: true,
+            labelText: 'CEP',
+            hintText: '12.345-678',
           ),
-        ],
-      );
-    else
+          //impede de ser colocado qualquer caracter que não seja número
+          inputFormatters: [
+            WhitelistingTextInputFormatter.digitsOnly,
+            CepInputFormatter(),
+          ],
+          keyboardType: TextInputType.number,
+          validator: (cep) {
+            if (cep.isEmpty)
+              return 'Campo obrigatório';
+            else if (cep.length != 10) return 'CEP Inválido';
+            return null;
+          },
+          onFieldSubmitted: (cepController) async {
+            await _adressBloc.getAddress(cepController);
+
+            //context.read<CartManager>().getAddress(cepController);
+            //Navigator.of(context).pop();
+          },
+        ),
+      ],
+    );
+    /*  else
       return GestureDetector(
         onTap: () {
           context.read<CartManager>().removeAddress();
         },
         child: TextFormField(
           enabled: false,
-          initialValue: address.zipCode,
+          initialValue: _adressBloc.cepp,
           decoration: const InputDecoration(
             isDense: true,
             labelText: 'CEP',
@@ -67,6 +69,6 @@ class CepInputField extends StatelessWidget {
             ),
           ),
         ),
-      );
+      ); */
   }
 }

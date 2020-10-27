@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:teste/bloc/adress_bloc.dart';
 import 'package:top_components/TopIcons.dart';
 import 'package:top_components/widgets/forms/form_input.dart';
 import 'package:top_components/widgets/forms/form_text_input.dart';
@@ -11,6 +12,7 @@ class PerfilPage extends StatefulWidget {
 }
 
 class _PerfilPageState extends State<PerfilPage> {
+  AdressBloc _adressBloc = AdressBloc();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -103,30 +105,39 @@ class _PerfilPageState extends State<PerfilPage> {
               ),
               title: 'Endereço de faturamento',
             ),
-            FormInput(
-              textField: TopInputDefault(
-                decoration: (context, defaultInputDecoration) =>
-                    defaultInputDecoration.copyWith(
-                  hintStyle: TextStyle(
-                    height: 2.1,
-                    color: Colors.orange,
-                    fontSize: 20,
-                    letterSpacing: 0.15,
-                  ),
-                  suffixIcon: Padding(
-                    padding: const EdgeInsets.only(bottom: 9),
-                    child: GestureDetector(
-                      onTap: () {},
-                      child: Icon(
-                        TopIcons.arrow_right,
-                        color: Colors.orange,
+            StreamBuilder<Object>(
+                stream: _adressBloc.address,
+                builder: (context, snapshot) {
+                  return FormInput(
+                    textField: TopInputDefault(
+                      //textEditingController: ,
+                      // onTap: (){
+                      //
+                      // },
+
+                      decoration: (context, defaultInputDecoration) =>
+                          defaultInputDecoration.copyWith(
+                        hintStyle: TextStyle(
+                          height: 2.1,
+                          color: Colors.orange,
+                          fontSize: 20,
+                          letterSpacing: 0.15,
+                        ),
+                        suffixIcon: Padding(
+                          padding: const EdgeInsets.only(bottom: 9),
+                          child: GestureDetector(
+                            onTap: () {},
+                            child: Icon(
+                              TopIcons.arrow_right,
+                              color: Colors.orange,
+                            ),
+                          ),
+                        ),
                       ),
                     ),
-                  ),
-                ),
-              ),
-              title: 'Endereço de entrega',
-            ),
+                    title: 'Endereço de entrega',
+                  );
+                }),
             FormInput(
               textField: TopInputDefault(
                 decoration: (context, defaultInputDecoration) =>
@@ -153,7 +164,9 @@ class _PerfilPageState extends State<PerfilPage> {
             ),
             AddButton(
               action: () {
-                Navigator.of(context).pushNamed('/AddressPage',);
+                Navigator.of(context).pushNamed(
+                  '/AddressPage',
+                );
               },
               text: 'CADASTAR NOVO ENDEREÇO',
               icon: TopIcons.plus_circle,

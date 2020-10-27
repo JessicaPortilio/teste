@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:teste/bloc/adress_bloc.dart';
 import 'package:teste/pages/menu/perfil/perfil.page.dart';
 import 'package:teste/pages/menu/perfil/address.page.dart';
 import 'package:teste/utils/app_routes.dart';
@@ -10,6 +11,7 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
+  final AdressBloc _adressBloc = AdressBloc();
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
@@ -24,7 +26,7 @@ class MyApp extends StatelessWidget {
         ), */
         routes: {
           AppRoutes.HOME: (ctx) => PerfilPage(),
-          AppRoutes.ADDRESS_PAGE: (ctx) => AddressPage()
+          AppRoutes.ADDRESS_PAGE: (ctx) => AddressPage(_adressBloc)
         },
       ),
     );
